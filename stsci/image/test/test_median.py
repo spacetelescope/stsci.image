@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 import numpy as np
-import nose
-from nose.tools import *
 from stsci.image import combine
 
 
@@ -41,28 +38,28 @@ def test_median1():
     result = combine.median(arrays)
     expected = np.array([[ 0,  6],
                          [12, 18]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_median2():
     result = combine.median(arrays, nhigh=1)
     expected = np.array([[ 0,  4],
                          [ 8, 12]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_median3():
     result = combine.median(arrays, nlow=1)
     expected = np.array([[ 0,  8],
                          [16, 24]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_median4():
     result = combine.median(arrays, outtype=np.float32)
     expected = np.array([[  0.,   6.],
                          [ 12.,  18.]], dtype=np.float32)
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_median5():
@@ -71,7 +68,7 @@ def test_median5():
     result = combine.median(arrays, badmasks=bm)
     expected = np.array([[ 0,  8],
                          [16, 24]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_median6():
@@ -79,4 +76,4 @@ def test_median6():
                             badmasks=combine.threshhold(arrays, high=25))
     expected = np.array([[ 0,  6],
                          [ 8, 12]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()

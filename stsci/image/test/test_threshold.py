@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-
 import numpy as np
-import nose
-from nose.tools import *
 from stsci.image import combine
 
 
@@ -28,7 +24,7 @@ def test_threshhold1():
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], dtype=np.int8)
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_threshold2():
@@ -46,7 +42,7 @@ def test_threshold2():
          [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
          [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
          [1, 1, 1, 0, 0, 0, 0, 1, 1, 1]], dtype=np.int8)
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_threshold3():
@@ -64,7 +60,7 @@ def test_threshold3():
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
          [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], dtype=np.int8)
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_threshold4():
@@ -82,4 +78,4 @@ def test_threshold4():
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], dtype=np.int8)
-    assert_true((result == expected).all())
+    assert (result == expected).all()

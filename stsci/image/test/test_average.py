@@ -1,7 +1,4 @@
-#!/usr/bin/env python
 import numpy as np
-import nose
-from nose.tools import *
 from stsci.image import combine
 
 
@@ -41,28 +38,28 @@ def test_average1():
     result = combine.average(arrays)
     expected = np.array([[ 0,  7],
                          [15, 22]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_average2():
     result = combine.average(arrays, nhigh=1)
     expected = np.array([[ 0,  4],
                          [ 9, 14]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_average3():
     result = combine.average(arrays, nlow=1)
     expected = np.array([[ 0,  9],
                          [18, 28]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_average4():
     result = combine.average(arrays, outtype=np.float32)
     expected = np.array([[  0. ,   7.5],
                          [ 15. ,  22.5]], dtype=np.float32)
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_average5():
@@ -71,7 +68,7 @@ def test_average5():
     result = combine.average(arrays, badmasks=bm)
     expected = np.array([[ 0,  9],
                          [18, 28]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 
 
 def test_average6():
@@ -79,5 +76,5 @@ def test_average6():
                              badmasks=combine.threshhold(arrays, high=25))
     expected = np.array([[ 0,  7],
                          [ 9, 14]])
-    assert_true((result == expected).all())
+    assert (result == expected).all()
 

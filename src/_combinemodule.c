@@ -240,7 +240,7 @@ _Py_combine(PyObject *obj, PyObject *args, PyObject *kw)
             return NULL;
         }
         arr[i] = (PyArrayObject *) PyArray_FROM_OTF(a, NPY_FLOAT64,
-                                                    NPY_IN_ARRAY);
+                                                    NPY_ARRAY_INOUT_ARRAY2);
         if (!arr[i]) {
             return NULL;
         }
@@ -260,7 +260,7 @@ _Py_combine(PyObject *obj, PyObject *args, PyObject *kw)
     }
 
     toutput = (PyArrayObject *) PyArray_FROM_OTF(output, NPY_FLOAT64,
-                                                 NPY_INOUT_ARRAY);
+                                                 NPY_ARRAY_INOUT_ARRAY2);
     if (!toutput) {
         return NULL;
     }
@@ -283,11 +283,14 @@ _Py_combine(PyObject *obj, PyObject *args, PyObject *kw)
     }
 
     for(i=0; i<narrays; i++) {
+        PyArray_ResolveWritebackIfCopy(arr[i]);
         Py_DECREF(arr[i]);
         if (badmasks != Py_None) {
+            PyArray_ResolveWritebackIfCopy(bmk[i]);
             Py_DECREF(bmk[i]);
         }
     }
+    PyArray_ResolveWritebackIfCopy(toutput);
     Py_DECREF(toutput);
 
     Py_INCREF(Py_None);

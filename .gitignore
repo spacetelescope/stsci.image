@@ -1,8 +1,10 @@
-__pycache__
-.pytest_cache
-.eggs
-build
-dist
 *.egg-info
-version.py
+*.o
+*.pyc
 *.so
+*.swp
+.eggs
+.pytest_cache
+__pycache__
+build/
+dist/

@@ -1,17 +1,35 @@
-#!/usr/bin/env python
-
-try:
-    from setuptools import setup
-except ImportError:
-    from distribute_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup
+from numpy import get_include as np_include
+from setuptools import setup, find_packages, Extension
 
 
 setup(
-    setup_requires=['d2to1>=0.2.5', 'stsci.distutils>=0.3.dev'],
-    namespace_packages=['stsci'], packages=['stsci'],
-    d2to1=True,
-    use_2to3=False,
-    zip_safe=False
+    name = 'stsci.image',
+    author = 'STScI',
+    author_email = 'help@stsci.edu',
+    description = 'Image array manipulation functions',
+    url = 'https://github.com/spacetelescope/stsci.image',
+    classifiers = [
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Scientific/Engineering :: Astronomy',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+    ],
+    install_requires = [
+        'numpy>=1.13',
+        'scipy',
+    ],
+    packages = find_packages(),
+    package_data = {
+        '': ['LICENSE.txt'],
+    },
+    ext_modules=[
+        Extension('stsci.image._combine',
+            ['src/_combinemodule.c'],
+            include_dirs=[np_include()],
+            define_macros=[('NUMPY','1')]),
+    ],
+    use_scm_version = True,
+    setup_requires = ['setuptools_scm'],
 )

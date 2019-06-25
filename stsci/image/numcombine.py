@@ -43,8 +43,6 @@ import warnings
 import numpy as np
 import stsci.image as image
 
-__version__ = '0.6.0'
-
 
 class numCombine(object):
     """ **DEPRECATED.** A lite version of the imcombine IRAF task

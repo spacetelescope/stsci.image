@@ -60,25 +60,20 @@ def imedian(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     >>> median(arrays)
     array([[ 0,  6],
            [12, 18]])
-
     >>> median(arrays, nhigh=1)
     array([[ 0,  4],
            [ 8, 12]])
-
     >>> median(arrays, nlow=1)
     array([[ 0,  8],
            [16, 24]])
-
     >>> median(arrays, outtype=np.float32)
-    array([[  0.,   6.],
-           [ 12.,  18.]], dtype=float32)
-
+    array([[ 0.,  6.],
+           [12., 18.]], dtype=float32)
     >>> bm = np.zeros((4,2,2), dtype=np.bool8)
     >>> bm[2,...] = 1
     >>> median(arrays, badmasks=bm)
     array([[ 0,  8],
            [16, 24]])
-
     >>> median(arrays, badmasks=threshhold(arrays, high=25))
     array([[ 0,  6],
            [ 8, 12]])
@@ -123,8 +118,8 @@ def median(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     array([[ 0,  8],
            [16, 24]])
     >>> median(arrays, outtype=np.float32)
-    array([[  0.,   6.],
-           [ 12.,  18.]], dtype=float32)
+    array([[ 0.,  6.],
+           [12., 18.]], dtype=float32)
     >>> bm = np.zeros((4,2,2), dtype=np.bool8)
     >>> bm[2,...] = 1
     >>> median(arrays, badmasks=bm)
@@ -176,8 +171,8 @@ def iaverage(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     array([[ 0,  9],
            [18, 28]])
     >>> average(arrays, outtype=np.float32)
-    array([[  0. ,   7.5],
-           [ 15. ,  22.5]], dtype=float32)
+    array([[ 0. ,  7.5],
+           [15. , 22.5]], dtype=float32)
     >>> bm = np.zeros((4,2,2), dtype=np.bool8)
     >>> bm[2,...] = 1
     >>> average(arrays, badmasks=bm)
@@ -228,8 +223,8 @@ def average(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     array([[ 0,  9],
            [18, 28]])
     >>> average(arrays, outtype=np.float32)
-    array([[  0. ,   7.5],
-           [ 15. ,  22.5]], dtype=float32)
+    array([[ 0. ,  7.5],
+           [15. , 22.5]], dtype=float32)
     >>> bm = np.zeros((4,2,2), dtype=np.bool8)
     >>> bm[2,...] = 1
     >>> average(arrays, badmasks=bm)
@@ -282,8 +277,8 @@ def minimum(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     array([[ 0,  4],
            [ 8, 12]])
     >>> minimum(arrays, outtype=np.float32)
-    array([[ 0.,  2.],
-           [ 4.,  6.]], dtype=float32)
+    array([[0., 2.],
+           [4., 6.]], dtype=float32)
     >>> bm = np.zeros((4,2,2), dtype=np.bool8)
     >>> bm[2,...] = 1
     >>> minimum(arrays, badmasks=bm)

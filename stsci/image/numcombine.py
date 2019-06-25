@@ -90,25 +90,6 @@ class numCombine(object):
     -------
     combArrObj : ndarray
         The attribute '.combArrObj' holds the combined output array.
-
-    Examples
-    --------
-    This class can be used to create a median image from a stack of images
-    with the following commands:
-
-    >>> import numpy as np
-    >>> from stsci.image import numcombine as nc
-    >>> a = np.ones([5,5],np.float32)
-    >>> b = a - 0.05
-    >>> c = a + 0.1
-    >>> result = nc.numCombine([a,b,c],combinationType='mean')
-    >>> result.combArrObj
-    array([[ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665]], dtype=float32)
-
     """
     def __init__(self,
         arrObjectList,         # Specifies a sequence of inputs arrays, which are nominally a stack of identically shaped images.
@@ -336,15 +317,13 @@ def num_combine(data, masks=None, combination_type="median",
     >>> a = np.ones([5,5],np.float32)
     >>> b = a - 0.05
     >>> c = a + 0.1
-    >>> result = nc.numcombine([a,b,c],combinationType='mean')
+    >>> result = nc.num_combine([a, b, c], combination_type='mean')
     >>> result
-    array([[ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665],
-           [ 1.01666665,  1.01666665,  1.01666665,  1.01666665,  1.01666665]],
-           dtype=float32)
-
+    array([[1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
+           [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
+           [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
+           [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
+           [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667]], dtype=float32)
     """
     data = np.asarray(data)
     if masks is not None:

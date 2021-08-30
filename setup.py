@@ -16,7 +16,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=[
-        'numpy>=1.13',
+        'numpy>=1.14',
         'scipy',
     ],
     packages=find_packages(),

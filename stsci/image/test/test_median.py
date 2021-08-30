@@ -1,15 +1,16 @@
 import numpy as np
+import pytest
+
 from stsci.image import combine
 
 
-arrays = []
-def setup_module():
-    global arrays
+@pytest.fixture
+def arrays():
     a = np.arange(4).reshape((2, 2))
-    arrays = [a * 16, a * 4, a * 2, a * 8]
+    return [a * 16, a * 4, a * 2, a * 8]
 
 
-def test_median1():
+def test_median1(arrays):
     """
     median() nominally computes the median pixels for a stack of
     identically shaped images.
@@ -41,28 +42,28 @@ def test_median1():
     assert (result == expected).all()
 
 
-def test_median2():
+def test_median2(arrays):
     result = combine.median(arrays, nhigh=1)
     expected = np.array([[ 0,  4],
                          [ 8, 12]])
     assert (result == expected).all()
 
 
-def test_median3():
+def test_median3(arrays):
     result = combine.median(arrays, nlow=1)
     expected = np.array([[ 0,  8],
                          [16, 24]])
     assert (result == expected).all()
 
 
-def test_median4():
+def test_median4(arrays):
     result = combine.median(arrays, outtype=np.float32)
     expected = np.array([[  0.,   6.],
                          [ 12.,  18.]], dtype=np.float32)
     assert (result == expected).all()
 
 
-def test_median5():
+def test_median5(arrays):
     bm = np.zeros((4,2,2), dtype=np.bool8)
     bm[2,...] = 1
     result = combine.median(arrays, badmasks=bm)
@@ -71,7 +72,7 @@ def test_median5():
     assert (result == expected).all()
 
 
-def test_median6():
+def test_median6(arrays):
     result = combine.median(arrays,
                             badmasks=combine.threshhold(arrays, high=25))
     expected = np.array([[ 0,  6],

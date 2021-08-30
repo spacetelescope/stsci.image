@@ -1,15 +1,16 @@
 import numpy as np
+import pytest
+
 from stsci.image import combine
 
 
-arrays = []
-def setup_module():
-    global arrays
+@pytest.fixture
+def arrays():
     a = np.arange(4).reshape((2, 2))
-    arrays = [a * 16, a * 4, a * 2, a * 8]
+    return [a * 16, a * 4, a * 2, a * 8]
 
 
-def test_average1():
+def test_average1(arrays):
     """
     average() nominally computes the average pixel value for a stack of
     identically shaped images.
@@ -41,28 +42,28 @@ def test_average1():
     assert (result == expected).all()
 
 
-def test_average2():
+def test_average2(arrays):
     result = combine.average(arrays, nhigh=1)
     expected = np.array([[ 0,  4],
                          [ 9, 14]])
     assert (result == expected).all()
 
 
-def test_average3():
+def test_average3(arrays):
     result = combine.average(arrays, nlow=1)
     expected = np.array([[ 0,  9],
                          [18, 28]])
     assert (result == expected).all()
 
 
-def test_average4():
+def test_average4(arrays):
     result = combine.average(arrays, outtype=np.float32)
     expected = np.array([[  0. ,   7.5],
                          [ 15. ,  22.5]], dtype=np.float32)
     assert (result == expected).all()
 
 
-def test_average5():
+def test_average5(arrays):
     bm = np.zeros((4,2,2), dtype=np.bool8)
     bm[2,...] = 1
     result = combine.average(arrays, badmasks=bm)
@@ -71,7 +72,7 @@ def test_average5():
     assert (result == expected).all()
 
 
-def test_average6():
+def test_average6(arrays):
     result = combine.average(arrays,
                              badmasks=combine.threshhold(arrays, high=25))
     expected = np.array([[ 0,  7],

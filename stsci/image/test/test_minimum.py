@@ -1,15 +1,16 @@
 import numpy as np
+import pytest
+
 from stsci.image import combine
 
 
-arrays = []
-def setup_module():
-    global arrays
+@pytest.fixture
+def arrays():
     a = np.arange(4).reshape((2, 2))
-    arrays = [a * 16, a * 4, a * 2, a * 8]
+    return [a * 16, a * 4, a * 2, a * 8]
 
 
-def test_minimum1():
+def test_minimum1(arrays):
     """
     minimum() nominally computes the minimum pixel value for a stack of
     identically shaped images.
@@ -41,28 +42,28 @@ def test_minimum1():
     assert (result == expected).all()
 
 
-def test_minimum2():
+def test_minimum2(arrays):
     result = combine.minimum(arrays, nhigh=1)
     expected = np.array([[0, 2],
                          [4, 6]])
     assert (result == expected).all()
 
 
-def test_minimum3():
+def test_minimum3(arrays):
     result = combine.minimum(arrays, nlow=1)
     expected = np.array([[ 0,  4],
                          [ 8, 12]])
     assert (result == expected).all()
 
 
-def test_minimum4():
+def test_minimum4(arrays):
     result = combine.minimum(arrays, outtype=np.float32)
     expected = np.array([[ 0.,  2.],
                          [ 4.,  6.]], dtype=np.float32)
     assert (result == expected).all()
 
 
-def test_minimum5():
+def test_minimum5(arrays):
     bm = np.zeros((4,2,2), dtype=np.bool8)
     bm[2,...] = 1
     result = combine.minimum(arrays, badmasks=bm)
@@ -71,7 +72,7 @@ def test_minimum5():
     assert (result == expected).all()
 
 
-def test_minimum6():
+def test_minimum6(arrays):
     result = combine.minimum(arrays,
                              badmasks=combine.threshhold(arrays, low=10))
     expected = np.array([[ 0, 16],

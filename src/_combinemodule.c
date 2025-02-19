@@ -262,7 +262,7 @@ _Py_combine(PyObject *obj, PyObject *args, PyObject *kw)
                 return NULL;
             }
             bmk[i] = (PyArrayObject *) PyArray_FROM_OTF(a, NPY_UINT8,
-                                                        NPY_IN_ARRAY);
+                                                        NPY_ARRAY_IN_ARRAY);
             if (!bmk[i]) {
                 return NULL;
             }

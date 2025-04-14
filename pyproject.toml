@@ -64,3 +64,4 @@ include = [
 ]
 
 [tool.setuptools_scm]
+version_file = "stsci/image/version.py"

@@ -8,7 +8,6 @@ authors = [
 ]
 classifiers = [
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Topic :: Scientific/Engineering :: Astronomy",
@@ -18,12 +17,10 @@ dependencies = [
     "numpy",
     "scipy",
 ]
+license-files = ["LICENSE"]
 dynamic = [
     "version",
 ]
-
-[project.license]
-file = "LICENSE"
 
 [project.optional-dependencies]
 test = [

@@ -17,7 +17,7 @@ dependencies = [
     "numpy",
     "scipy",
 ]
-license-files = ["LICENSE"]
+license-files = ["LICENSE.txt"]
 dynamic = [
     "version",
 ]
@@ -52,7 +52,7 @@ zip-safe = false
 
 [tool.setuptools.packages.find]
 include = [
-    "stsci",
+    "stsci/image",
 ]
 
 [tool.setuptools.package-data]

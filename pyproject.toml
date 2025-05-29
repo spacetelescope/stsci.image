@@ -51,9 +51,7 @@ build-backend = "setuptools.build_meta"
 zip-safe = false
 
 [tool.setuptools.packages.find]
-where = ["lib"]
-include = ["stsci*"]
-exclude = ["docs*", "src*"]
+include = ["stsci.image"]
 
 [tool.setuptools.package-data]
 "*" = [
@@ -61,4 +59,4 @@ exclude = ["docs*", "src*"]
 ]
 
 [tool.setuptools_scm]
-version_file = "lib/stsci/image/version.py"
+version_file = "stsci/image/version.py"

@@ -1,1 +1,1 @@
-#stsci.image
+# stsci.image

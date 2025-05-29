@@ -44,7 +44,7 @@ jobs:
         run: |
           set -x
           python -m pip install --upgrade pip setuptools
-          python -m pip install -e .[test] numpy${{ matrix.numpy-version }}
+          python -m pip install -v -e .[test] numpy${{ matrix.numpy-version }}
 
       - name: Show packages
         run: |

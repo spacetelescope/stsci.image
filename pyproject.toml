@@ -41,7 +41,7 @@ repository = "https://github.com/spacetelescope/stsci.image"
 [build-system]
 requires = [
     "setuptools >=61.2",
-    "setuptools_scm[toml] >=6.2",
+    "setuptools_scm[toml] >=8",
     "wheel",
     "numpy>=2.0",
 ]
@@ -51,9 +51,9 @@ build-backend = "setuptools.build_meta"
 zip-safe = false
 
 [tool.setuptools.packages.find]
-include = [
-    "stsci/image",
-]
+where = ["lib"]
+include = ["stsci*"]
+exclude = ["docs*", "src*"]
 
 [tool.setuptools.package-data]
 "*" = [
@@ -61,4 +61,4 @@ include = [
 ]
 
 [tool.setuptools_scm]
-version_file = "stsci/image/version.py"
+version_file = "lib/stsci/image/version.py"

@@ -1,15 +1,11 @@
-from __future__ import absolute_import, division, unicode_literals, print_function
+import warnings
 
 import numpy as np
+
 from ._combine import combine as _combine
 
 
-__all__ = ["median", "average", "minimum", "imedian", "iaverage", "threshold"]
-
-
-def _combine_f(
-    funcstr, arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None
-):
+def _combine_f(funcstr, arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     arrays = [np.asarray(a) for a in arrays]
     shape = arrays[0].shape
     if output is None:
@@ -28,12 +24,12 @@ def _combine_f(
 
 
 def imedian(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
-    """median() nominally computes the median pixels for a stack of
+    """Nominally computes the median pixels for a stack of
     identically shaped images, filling pixels with no weight with the value from
     the first input array.
 
     Parameters
-    -----------
+    ----------
     arrays : list of ndarray
         A sequence of inputs arrays, which are nominally a stack of identically shaped images.
 
@@ -56,8 +52,13 @@ def imedian(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
                indicates that a particular pixel is not to be included in the
                median calculation.
 
+    Returns
+    -------
+    ndarray
+        The combined array.
+
     Examples
-    ---------
+    --------
     >>> a = np.arange(4)
     >>> a = a.reshape((2,2))
     >>> arrays = [a*16, a*4, a*2, a*8]
@@ -87,7 +88,7 @@ def imedian(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
 
 
 def median(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
-    """median() nominally computes the median pixels for a stack of
+    """Nominally computes the median pixels for a stack of
     identically shaped images.
 
     arrays     specifies a sequence of inputs arrays, which are nominally a
@@ -134,12 +135,11 @@ def median(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
     array([[ 0,  6],
            [ 8, 12]])
     """
-
     return _combine_f("median", arrays, output, outtype, nlow, nhigh, badmasks)
 
 
 def iaverage(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
-    """average() nominally computes the average pixel value for a stack of
+    """Nominally computes the average pixel value for a stack of
     identically shaped images, filling pixels with no weight with the value from
     the first input array.
 
@@ -192,7 +192,7 @@ def iaverage(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
 
 
 def average(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
-    """average() nominally computes the average pixel value for a stack of
+    """Nominally computes the average pixel value for a stack of
     identically shaped images.
 
     arrays     specifies a sequence of inputs arrays, which are nominally a
@@ -240,12 +240,11 @@ def average(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
            [ 9, 14]])
 
     """
-
     return _combine_f("average", arrays, output, outtype, nlow, nhigh, badmasks)
 
 
 def minimum(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
-    """minimum() nominally computes the minimum pixel value for a stack of
+    """Nominally computes the minimum pixel value for a stack of
     identically shaped images.
 
     arrays     specifies a sequence of inputs arrays, which are nominally a
@@ -293,12 +292,20 @@ def minimum(arrays, output=None, outtype=None, nlow=0, nhigh=0, badmasks=None):
            [16, 12]])
 
     """
-
     return _combine_f("minimum", arrays, output, outtype, nlow, nhigh, badmasks)
 
 
+def threshhold(arrays, low=None, high=None, outputs=None):  # codespell:ignore threshhold
+    warnings.warn(
+        "Function 'threshhold' is deprecated and will be removed in a future "
+        "release. Use 'threshold' instead.",
+        DeprecationWarning,
+    )
+    threshold(arrays, low=low, high=high, outputs=outputs)
+
+
 def threshold(arrays, low=None, high=None, outputs=None):
-    """threshold() computes a boolean array 'outputs' with
+    """Computes a boolean array 'outputs' with
     corresponding elements for each element of arrays.  The
     boolean value is true where each of the arrays values
     is < the low or >= the high thresholds.
@@ -362,34 +369,14 @@ def threshold(arrays, low=None, high=None, outputs=None):
     if high is None:
         for k in range(arrays.shape[0]):
             np.less(arrays[k], low, outputs[k])
+    elif low is None:
+        for k in range(arrays.shape[0]):
+            np.greater_equal(arrays[k], high, outputs[k])
     else:
-        if low is None:
-            for k in range(arrays.shape[0]):
-                np.greater_equal(arrays[k], high, outputs[k])
-        else:
-            for k in range(arrays.shape[0]):
-                arr = arrays[k]
-                out = outputs[k]
-                np.greater_equal(arr, high, out)
-                np.logical_or(out, arr < low, out)
+        for k in range(arrays.shape[0]):
+            arr = arrays[k]
+            out = outputs[k]
+            np.greater_equal(arr, high, out)
+            np.logical_or(out, arr < low, out)
 
     return outputs
-
-
-def _bench():
-    """time a 10**6 element median"""
-    import time
-
-    a = np.arange(10**6)
-    a = a.reshape((1000, 1000))
-    arrays = [a * 2, a * 64, a * 16, a * 8]
-    t0 = time.clock()
-    median(arrays)
-    print("maskless:", time.clock() - t0)
-
-    a = np.arange(10**6)
-    a = a.reshape((1000, 1000))
-    arrays = [a * 2, a * 64, a * 16, a * 8]
-    t0 = time.clock()
-    median(arrays, badmasks=np.zeros((1000, 1000), dtype=bool))
-    print("masked:", time.clock() - t0)

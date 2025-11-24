@@ -1,5 +1,5 @@
 from numpy import get_include as np_include
-from setuptools import setup, Extension
+from setuptools import Extension, setup
 
 ext_modules = [
     Extension(

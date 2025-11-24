@@ -1,8 +1,9 @@
 import numpy as np
+
 from stsci.image import combine
 
 
-def test_threshhold1():
+def test_threshold1():
     """
     threshold() computes a boolean array 'outputs' with
     corresponding elements for each element of arrays.  The

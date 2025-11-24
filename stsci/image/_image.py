@@ -1,15 +1,12 @@
-from __future__ import division
-
 import numpy as np
-from scipy.signal import correlate2d
 from scipy import ndimage
+from scipy.signal import correlate2d
 
 
 def _translate(a, dx, dy, output=None, mode="full", cval=0.0):
     """_translate does positive sub-pixel shifts using bilinear
     interpolation.
     """
-
     assert 0 <= dx < 1.0
     assert 0 <= dy < 1.0
 
@@ -26,15 +23,13 @@ def _translate(a, dx, dy, output=None, mode="full", cval=0.0):
     )
 
     if output is not None:
-        raise NotImplementedError(
-            "scipy.signal.correlate2d does not accept output keyword"
-        )
+        raise NotImplementedError("scipy.signal.correlate2d does not accept output keyword")
 
     return correlate2d(a, kernel, mode=mode, fillvalue=cval)
 
 
 def translate(a, sdx, sdy, output=None, mode="nearest", cval=0.0):
-    """translate performs a translation of 'a' by (sdx, sdy)
+    """Translate performs a translation of 'a' by (sdx, sdy)
     storing the result in 'output'.
 
     Parameters
@@ -56,8 +51,8 @@ def translate(a, sdx, sdy, output=None, mode="nearest", cval=0.0):
 
     cval : float
         Value to use if mode set to 'constant'.
-    """
 
+    """
     a = np.asarray(a)
 
     sdx, sdy = -sdx, -sdy  # Flip sign to match IRAF sign convention

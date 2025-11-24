@@ -37,16 +37,17 @@
 #                     use of numerixenv to reflect sole support for numpy
 #      Version 0.6.0: Modernized code: replacing numCombine class with
 #                     num_combine function.
-from __future__ import absolute_import, division, unicode_literals, print_function
 import warnings
+
 import numpy as np
-import stsci.image as image
+
+from stsci import image
 
 
-class numCombine(object):
+class numCombine:
     """**DEPRECATED.** A lite version of the imcombine IRAF task
 
-    .. warning::
+    .. warn::
         This class has been deprecated since version 0.6.0 and it will be
         removed in a future release. Use `num_combine` instead of this
         class.
@@ -87,12 +88,13 @@ class numCombine(object):
     -------
     combArrObj : ndarray
         The attribute '.combArrObj' holds the combined output array.
+
     """
 
     def __init__(
         self,
         arrObjectList,  # Specifies a sequence of inputs arrays, which are nominally a stack of identically shaped images.
-        numarrayMaskList=None,  #
+        numarrayMaskList=None,
         combinationType="median",  # What time of numarray object should be created?
         nlow=0,  # Number of low pixels to throw out of the median calculation
         nhigh=0,  # Number of high pixels to throw out of the median calculation
@@ -132,9 +134,7 @@ class numCombine(object):
 
         # Simple sanity check to make sure that the min/max clipping doesn't throw out all of the pixels.
         if (self.__numObjs - (self.__nlow + self.__nhigh)) < self.__nkeep:
-            raise ValueError(
-                "Rejecting more pixels than specified by the nkeep parameter!"
-            )
+            raise ValueError("Rejecting more pixels than specified by the nkeep parameter!")
 
         # Create output numarray object
         self.combArrObj = np.zeros(
@@ -182,11 +182,8 @@ class numCombine(object):
             self.__masks = self.__arrMaskList
         else:
             for mask in range(len(self.__arrMaskList)):
-                self.__masks.append(
-                    np.logical_or(__tmpMaskList[mask], self.__arrMaskList[mask])
-                )
+                self.__masks.append(np.logical_or(__tmpMaskList[mask], self.__arrMaskList[mask]))
         del __tmpMaskList
-        return None
 
     def _imedian(self):
         # Create a median image.
@@ -198,7 +195,6 @@ class numCombine(object):
             nhigh=self.__nhigh,
             badmasks=self.__masks,
         )
-        return None
 
     def _iaverage(self):
         # Create an average image.
@@ -210,7 +206,6 @@ class numCombine(object):
             nhigh=self.__nhigh,
             badmasks=self.__masks,
         )
-        return None
 
     def _median(self):
         # Create a median image.
@@ -222,7 +217,6 @@ class numCombine(object):
             nhigh=self.__nhigh,
             badmasks=self.__masks,
         )
-        return None
 
     def _average(self):
         # Create an average image.
@@ -234,7 +228,6 @@ class numCombine(object):
             nhigh=self.__nhigh,
             badmasks=self.__masks,
         )
-        return None
 
     def _sum(self):
         # Sum the images in the input list
@@ -275,11 +268,10 @@ class numCombine(object):
 
             for imgobj in self.__arrObjectList:
                 _newMax = imgobj.max()
-                if _newMax > _maxValue:
-                    _maxValue = _newMax
+                _maxValue = max(_maxValue, _newMax)
 
-            tmpList = []
             if self.__arrMaskList is not None:
+                tmpList = []
                 # Sum the weightMaskList elements
                 __maskSum = self.__sumImages(self.__arrMaskList)
 
@@ -292,8 +284,7 @@ class numCombine(object):
                     )
                     tmpList.append(tmp)
             else:
-                for imgobj in range(len(self.__arrObjectList)):
-                    tmpList.append(imgobj)
+                tmpList = list(self.__arrObjectList)
 
             # Create the minimum image by computing a median array throwing out all but one of the pixels in the stack
             # starting from the top of the stack.
@@ -308,9 +299,7 @@ class numCombine(object):
             # If we have been given masks we need to reset the mask values to 0 in the image
             if self.__arrMaskList is not None:
                 # Reset any pixl at _maxValue + 1 to 0.
-                self.combArrObj = np.where(
-                    __maskSum == self.__numObjs, 0, self.combArrObj
-                )
+                self.combArrObj = np.where(__maskSum == self.__numObjs, 0, self.combArrObj)
 
     def __sumImages(self, arrObjectList):
         """Sum a list of numarray objects."""
@@ -376,6 +365,7 @@ def num_combine(
            [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
            [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667],
            [1.0166667, 1.0166667, 1.0166667, 1.0166667, 1.0166667]], dtype=float32)
+
     """
     data = np.asarray(data)
     if masks is not None:
@@ -402,27 +392,17 @@ def num_combine(
     combination_type = combination_type.lower()
 
     if combination_type == "median":
-        image.median(
-            data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks
-        )
+        image.median(data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks)
     elif combination_type == "imedian":
-        image.imedian(
-            data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks
-        )
+        image.imedian(data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks)
     elif combination_type in ["iaverage", "imean"]:
-        image.iaverage(
-            data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks
-        )
+        image.iaverage(data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks)
     elif combination_type == "mean":
-        image.average(
-            data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks
-        )
+        image.average(data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks)
     elif combination_type == "sum":
         np.sum(data, axis=0, out=comb_arr)
     elif combination_type == "minimum":
-        image.minimum(
-            data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks
-        )
+        image.minimum(data, comb_arr, comb_arr.dtype, nlow=nlow, nhigh=nhigh, badmasks=masks)
     else:
         comb_arr.fill(0)
         print("Combination type not supported!!!")

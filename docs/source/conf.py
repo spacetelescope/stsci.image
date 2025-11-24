@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 #
 # Astropy documentation build configuration file.
@@ -54,9 +53,7 @@ def setup(app):
     app.connect("builder-inited", patch_automodapi)
 
 
-with open(
-    Path(__file__).parent.parent.parent / "pyproject.toml", "rb"
-) as configuration_file:
+with open(Path(__file__).parent.parent.parent / "pyproject.toml", "rb") as configuration_file:
     conf = tomllib.load(configuration_file)
 metadata = conf["project"]
 
@@ -160,9 +157,7 @@ htmlhelp_basename = project + "doc"
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
-latex_documents = [
-    ("index", project + ".tex", project + " Documentation", author, "manual")
-]
+latex_documents = [("index", project + ".tex", project + " Documentation", author, "manual")]
 
 
 # -- Options for manual page output --------------------------------------------

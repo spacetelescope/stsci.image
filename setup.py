@@ -6,7 +6,6 @@ ext_modules = [
         "stsci.image._combine",
         ["src/_combinemodule.c"],
         include_dirs=[np_include()],
-        define_macros=[("NUMPY", "1")],
     ),
 ]
 

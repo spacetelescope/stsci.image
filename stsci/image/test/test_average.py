@@ -37,44 +37,37 @@ def test_average1(arrays):
     """
 
     result = combine.average(arrays)
-    expected = np.array([[ 0,  7],
-                         [15, 22]])
+    expected = np.array([[0, 7], [15, 22]])
     assert (result == expected).all()
 
 
 def test_average2(arrays):
     result = combine.average(arrays, nhigh=1)
-    expected = np.array([[ 0,  4],
-                         [ 9, 14]])
+    expected = np.array([[0, 4], [9, 14]])
     assert (result == expected).all()
 
 
 def test_average3(arrays):
     result = combine.average(arrays, nlow=1)
-    expected = np.array([[ 0,  9],
-                         [18, 28]])
+    expected = np.array([[0, 9], [18, 28]])
     assert (result == expected).all()
 
 
 def test_average4(arrays):
     result = combine.average(arrays, outtype=np.float32)
-    expected = np.array([[  0. ,   7.5],
-                         [ 15. ,  22.5]], dtype=np.float32)
+    expected = np.array([[0.0, 7.5], [15.0, 22.5]], dtype=np.float32)
     assert (result == expected).all()
 
 
 def test_average5(arrays):
-    bm = np.zeros((4,2,2), dtype=bool)
-    bm[2,...] = 1
+    bm = np.zeros((4, 2, 2), dtype=bool)
+    bm[2, ...] = 1
     result = combine.average(arrays, badmasks=bm)
-    expected = np.array([[ 0,  9],
-                         [18, 28]])
+    expected = np.array([[0, 9], [18, 28]])
     assert (result == expected).all()
 
 
 def test_average6(arrays):
-    result = combine.average(arrays,
-                             badmasks=combine.threshhold(arrays, high=25))
-    expected = np.array([[ 0,  7],
-                         [ 9, 14]])
+    result = combine.average(arrays, badmasks=combine.threshold(arrays, high=25))
+    expected = np.array([[0, 7], [9, 14]])
     assert (result == expected).all()

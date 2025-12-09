@@ -1,3 +1,3 @@
-from .version import __version__
-from ._image import *
-from .combine import *
+from ._image import *  # noqa: F403
+from .combine import *  # noqa: F403
+from .version import __version__  # noqa: F401

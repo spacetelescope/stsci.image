@@ -37,44 +37,37 @@ def test_median1(arrays):
     """
 
     result = combine.median(arrays)
-    expected = np.array([[ 0,  6],
-                         [12, 18]])
+    expected = np.array([[0, 6], [12, 18]])
     assert (result == expected).all()
 
 
 def test_median2(arrays):
     result = combine.median(arrays, nhigh=1)
-    expected = np.array([[ 0,  4],
-                         [ 8, 12]])
+    expected = np.array([[0, 4], [8, 12]])
     assert (result == expected).all()
 
 
 def test_median3(arrays):
     result = combine.median(arrays, nlow=1)
-    expected = np.array([[ 0,  8],
-                         [16, 24]])
+    expected = np.array([[0, 8], [16, 24]])
     assert (result == expected).all()
 
 
 def test_median4(arrays):
     result = combine.median(arrays, outtype=np.float32)
-    expected = np.array([[  0.,   6.],
-                         [ 12.,  18.]], dtype=np.float32)
+    expected = np.array([[0.0, 6.0], [12.0, 18.0]], dtype=np.float32)
     assert (result == expected).all()
 
 
 def test_median5(arrays):
-    bm = np.zeros((4,2,2), dtype=bool)
-    bm[2,...] = 1
+    bm = np.zeros((4, 2, 2), dtype=bool)
+    bm[2, ...] = 1
     result = combine.median(arrays, badmasks=bm)
-    expected = np.array([[ 0,  8],
-                         [16, 24]])
+    expected = np.array([[0, 8], [16, 24]])
     assert (result == expected).all()
 
 
 def test_median6(arrays):
-    result = combine.median(arrays,
-                            badmasks=combine.threshhold(arrays, high=25))
-    expected = np.array([[ 0,  6],
-                         [ 8, 12]])
+    result = combine.median(arrays, badmasks=combine.threshold(arrays, high=25))
+    expected = np.array([[0, 6], [8, 12]])
     assert (result == expected).all()

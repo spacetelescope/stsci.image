@@ -37,44 +37,37 @@ def test_minimum1(arrays):
     """
 
     result = combine.minimum(arrays)
-    expected = np.array([[0, 2],
-                         [4, 6]])
+    expected = np.array([[0, 2], [4, 6]])
     assert (result == expected).all()
 
 
 def test_minimum2(arrays):
     result = combine.minimum(arrays, nhigh=1)
-    expected = np.array([[0, 2],
-                         [4, 6]])
+    expected = np.array([[0, 2], [4, 6]])
     assert (result == expected).all()
 
 
 def test_minimum3(arrays):
     result = combine.minimum(arrays, nlow=1)
-    expected = np.array([[ 0,  4],
-                         [ 8, 12]])
+    expected = np.array([[0, 4], [8, 12]])
     assert (result == expected).all()
 
 
 def test_minimum4(arrays):
     result = combine.minimum(arrays, outtype=np.float32)
-    expected = np.array([[ 0.,  2.],
-                         [ 4.,  6.]], dtype=np.float32)
+    expected = np.array([[0.0, 2.0], [4.0, 6.0]], dtype=np.float32)
     assert (result == expected).all()
 
 
 def test_minimum5(arrays):
-    bm = np.zeros((4,2,2), dtype=bool)
-    bm[2,...] = 1
+    bm = np.zeros((4, 2, 2), dtype=bool)
+    bm[2, ...] = 1
     result = combine.minimum(arrays, badmasks=bm)
-    expected = np.array([[ 0,  4],
-                         [ 8, 12]])
+    expected = np.array([[0, 4], [8, 12]])
     assert (result == expected).all()
 
 
 def test_minimum6(arrays):
-    result = combine.minimum(arrays,
-                             badmasks=combine.threshhold(arrays, low=10))
-    expected = np.array([[ 0, 16],
-                         [16, 12]])
+    result = combine.minimum(arrays, badmasks=combine.threshold(arrays, low=10))
+    expected = np.array([[0, 16], [16, 12]])
     assert (result == expected).all()

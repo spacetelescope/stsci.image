@@ -1,9 +1,3 @@
-from importlib.metadata import PackageNotFoundError, version
-try:
-    __version__ = version(__name__)
-except PackageNotFoundError:
-    # package is not installed
-    __version__ = 'unknown'
-
-from ._image import *
-from .combine import *
+from ._image import *  # noqa: F403
+from .combine import *  # noqa: F403
+from .version import __version__  # noqa: F401

@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
       - '*.x'
     tags:
       - '*'
@@ -21,13 +21,15 @@ jobs:
       matrix:
         exclude:
           - python-version: "3.12"
-            numpy-version: "~=1.23.0"
-          - python-version: "3.13"
-            numpy-version: "~=1.23.0"
+            numpy-version: ">=2.0"
           - python-version: "3.13"
             numpy-version: "~=1.26.0"
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
-        numpy-version: ["~=1.23.0", "~=1.26.0", ">=2.0"]
+          - python-version: "3.14"
+            numpy-version: "~=1.26.0"
+          - python-version: "3.15"
+            numpy-version: "~=1.26.0"
+        python-version: ["3.11", "3.12", "3.13", "3.14", "3.15"]
+        numpy-version: ["~=1.26.0", ">=2.0"]
 
     steps:
       - name: Checkout code

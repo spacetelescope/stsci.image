@@ -1,8 +1,6 @@
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 
 import datetime
-import sys
-from pathlib import Path
 
 from stsci.image import __version__
 

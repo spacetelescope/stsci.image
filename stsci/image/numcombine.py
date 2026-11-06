@@ -47,7 +47,7 @@ from stsci import image
 class numCombine:
     """**DEPRECATED.** A lite version of the imcombine IRAF task
 
-    .. warn::
+    .. warning::
         This class has been deprecated since version 0.6.0 and it will be
         removed in a future release. Use `num_combine` instead of this
         class.

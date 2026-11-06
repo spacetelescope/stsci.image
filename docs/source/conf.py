@@ -28,10 +28,7 @@ import datetime
 import sys
 from pathlib import Path
 
-if sys.version_info < (3, 11):
-    import tomli as tomllib
-else:
-    import tomllib
+from stsci.image import __version__
 
 sys.path.insert(0, str(Path("exts/").resolve()))
 
@@ -51,11 +48,6 @@ def patch_automodapi(app):
 
 def setup(app):
     app.connect("builder-inited", patch_automodapi)
-
-
-with open(Path(__file__).parent.parent.parent / "pyproject.toml", "rb") as configuration_file:
-    conf = tomllib.load(configuration_file)
-metadata = conf["project"]
 
 
 extensions = [
@@ -98,21 +90,18 @@ rst_epilog = """
 # -- Project information ------------------------------------------------------
 
 # This does not *have* to match the package name, but typically does
-project = metadata["name"]
-author = metadata["authors"][0]["name"]
+project = "stsci.image"
+author = "STScI"
 copyright = f"{datetime.datetime.now().year}, {author}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 
-__import__(project)
-package = sys.modules[project]
-
 # The short X.Y version.
-version = package.__version__.split("-", 1)[0]
+version = __version__.split("-", 1)[0]
 # The full version, including alpha/beta/rc tags.
-release = package.__version__
+release = __version__
 
 
 # -- Options for HTML output ---------------------------------------------------

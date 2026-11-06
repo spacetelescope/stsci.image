@@ -18,7 +18,6 @@ jobs:
         # Linux wheels
         - cp3*-manylinux_x86_64
         # MacOS wheels
-        - cp3*-macosx_x86_64
         # Until we have arm64 runners, we can't automatically test arm64 wheels
         - cp3*-macosx_arm64
       sdist: true

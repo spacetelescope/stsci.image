@@ -12,13 +12,12 @@ concurrency:
 
 jobs:
   build:
-    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish.yml@v1
+    uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish.yml@1285b95e32c783cfa40eb2ffbd6ca4cd023fb884 # v3.2.2
     with:
       targets: |
         # Linux wheels
         - cp3*-manylinux_x86_64
         # MacOS wheels
-        - cp3*-macosx_x86_64
         # Until we have arm64 runners, we can't automatically test arm64 wheels
         - cp3*-macosx_arm64
       sdist: true
